@@ -1,0 +1,173 @@
+{% extends "base.html" %}
+{% block title_block %}
+	Form
+{% endblock title_block %}
+{% block content %}
+	<div class="container top">
+		<div class="tbox">
+			<h4 class="title">Request New Codeline</h4>
+		</div>
+		<form class="form-horizontal" action=".">
+			<div class="box">
+				<legend><h4 class="bold">Codeline Information</h4></legend>
+				<div class="form-group">
+					<label class="control-label col-sm-2">Codeline Name:</label>
+					<div class="col-sm-10">
+						<input type="email" class="form-control" id="CName" placeholder="Codeline Name" name="CName">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2">Parent Codeline:</label>
+					<div class="col-sm-10">
+						<select class="form-control" id="sel1">
+							<option>1</option>
+							<option>2</option>
+							<option>3</option>
+							<option>4</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="email">Branch Bug:</label>
+					<div class="col-sm-10">
+						<input type="email" class="form-control" id="Bug" placeholder="Branch Bug" name="Bug">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="Tag">Tag:</label>
+					<div class="col-sm-10">
+						<input type="email" class="form-control" id="Tag" placeholder="Tag" name="Tag">
+					</div>
+				</div>
+			</div>
+			<br>
+			<div class="box">
+				<legend><p class="bold">Steps</p></legend>
+				<div class="form-group">
+					<label class="control-label col-sm-2">Create Branch:</label>
+					<div class="col-sm-10">
+						<select class="form-control" id="cb">
+							<option>False</option>
+							<option>True</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2">Setup Standard Push:</label>
+					<div class="col-sm-10">
+						<select class="form-control" id="ssp">
+							<option value="0">False</option>
+							<option value="1">True</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2">Setup Partner Push:</label>
+					<div class="col-sm-10">
+						<select class="form-control" id="spp">
+							<option>False</option>
+							<option>True</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2">Setup Internal Builds:</label>
+					<div class="col-sm-10">
+						<select class="form-control" id="sib">
+							<option value="0">False</option>
+							<option value="1">True</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2">Do Push:</label>
+					<div class="col-sm-10">
+						<select class="form-control" id="dp">
+							<option>False</option>
+							<option>True</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2">Setup External Build:</label>
+					<div class="col-sm-10">
+						<select class="form-control" id="seb">
+							<option value="0">False</option>
+							<option value="1">True</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="box hidden" id="h-ssp">
+				<div class="row">
+					<div class="col-sm-7">
+						<legend>
+							<p class="bold">Push Information</p>
+						</legend>
+					</div>
+					<div class="col-sm-3 pull-right">
+						<input type="text" name="ssp-search" placeholder="Search" class="form-control" id="ssp-search">
+					</div>
+					<div class="col-sm-2">
+						<label class="s-all">Select All</label><input type="checkbox" id="ssp-all">
+					</div>
+				</div>
+				{% for p in push %}
+					<div class="checkbox">
+						<label class="ssp_inputs"><input type="checkbox" value="">{{ p.name }}</label>
+					</div>
+				{% endfor %}
+				
+			</div>
+			<div class="box hidden" id="h-sib">
+				<div class="row">
+					<div class="col-sm-7">
+						<legend>
+							<p class="bold">Push Information</p>
+						</legend>
+					</div>
+					<div class="col-sm-3 pull-right">
+						<input type="text" name="sib-search" placeholder="Search" class="form-control" id="sib-search">
+					</div>
+					<div class="col-sm-2">
+						<label class="s-all">Select All</label><input type="checkbox" id="sib-all">
+					</div>
+				</div>
+				<div class="checkbox">
+					<label class="sib_inputs"><input type="checkbox" value="">Option 1</label>
+				</div>
+				<div class="checkbox">
+					<label class="sib_inputs"><input type="checkbox" value="">Option 2</label>
+				</div>
+				<div class="checkbox ">
+					<label class="sib_inputs"><input type="checkbox" value="">Option 3</label>
+				</div>
+			</div>
+			<div class="box hidden" id="h-seb">
+				<div class="row">
+					<div class="col-sm-7">
+						<legend>
+							<p class="bold">Push Information</p>
+						</legend>
+					</div>
+					<div class="col-sm-3 pull-right">
+						<input type="text" name="seb-search" placeholder="Search" class="form-control" id="seb-search">
+					</div>
+					<div class="col-sm-2">
+						<label class="s-all">Select All</label><input type="checkbox" id="seb-all">
+					</div>
+				</div>
+				<div class="checkbox">
+					<label class="seb_inputs"><input type="checkbox" value="">Option 1</label>
+				</div>
+				<div class="checkbox">
+					<label class="seb_inputs"><input type="checkbox" value="">Option 2</label>
+				</div>
+				<div class="checkbox">
+					<label class="seb_inputs"><input type="checkbox" value="" >Option 3</label>
+				</div>
+			</div>
+			<button type="submit" class="btn btn-success pull-right">Submit</button>
+		</form>
+	</div>
+{% endblock content %}
