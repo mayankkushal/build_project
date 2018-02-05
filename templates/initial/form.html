@@ -15,7 +15,7 @@
 					<label class="control-label col-sm-2">Codeline Name:</label>
 					<div class="col-sm-10">
 						<input type="text" class="form-control" id="CName" 
-						placeholder="Codeline Name" name="c_name" pattern="\d{3}">
+						placeholder="Codeline Name" name="c_name">
 					</div>
 				</div>
 				<div class="form-group">
@@ -109,12 +109,7 @@
 						<label class="s-all">Select All</label><input type="checkbox" id="ssp-all">
 					</div>
 				</div>
-				{% for p in push %}
-					<div class="checkbox">
-						<label class="ssp_inputs"><input type="checkbox" value="">{{ p.name }}</label>
-					</div>
-				{% endfor %}
-				
+				<div class="ssp-dy"></div>
 			</div>
 			<div class="box hidden" id="h-sib">
 				<div class="row">
@@ -130,15 +125,7 @@
 						<label class="s-all">Select All</label><input type="checkbox" id="sib-all">
 					</div>
 				</div>
-				<div class="checkbox">
-					<label class="sib_inputs"><input type="checkbox" value="">Option 1</label>
-				</div>
-				<div class="checkbox">
-					<label class="sib_inputs"><input type="checkbox" value="">Option 2</label>
-				</div>
-				<div class="checkbox ">
-					<label class="sib_inputs"><input type="checkbox" value="">Option 3</label>
-				</div>
+				<div class="sib-dy"></div>
 			</div>
 			<div class="box hidden" id="h-seb">
 				<div class="row">
@@ -154,33 +141,7 @@
 						<label class="s-all">Select All</label><input type="checkbox" id="seb-all">
 					</div>
 				</div>
-				<div class="checkbox">
-					<label class="seb_inputs"><input type="checkbox" value="">Option 1</label>
-				</div>
-				<div class="checkbox">
-					<label class="seb_inputs"><input type="checkbox" value="">Option 2</label>
-				</div>
-				<div class="checkbox">
-					<label class="seb_inputs"><input type="checkbox" value="" >Option 3</label>
-				</div>
-				<div class="checkbox">
-					<label class="seb_inputs"><input type="checkbox" value="">Option 1</label>
-				</div>
-				<div class="checkbox">
-					<label class="seb_inputs"><input type="checkbox" value="">Option 2</label>
-				</div>
-				<div class="checkbox">
-					<label class="seb_inputs"><input type="checkbox" value="" >Option 3</label>
-				</div>
-				<div class="checkbox">
-					<label class="seb_inputs"><input type="checkbox" value="">Option 1</label>
-				</div>
-				<div class="checkbox">
-					<label class="seb_inputs"><input type="checkbox" value="">Option 2</label>
-				</div>
-				<div class="checkbox">
-					<label class="seb_inputs"><input type="checkbox" value="" >Option 3</label>
-				</div>
+				<div class="seb-dy"></div>
 			</div>
 			<button type="submit" class="btn btn-success pull-right">Submit</button>
 		</form>

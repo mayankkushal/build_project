@@ -4,6 +4,8 @@ from __future__ import unicode_literals
 from django.shortcuts import render
 from django.views.generic import FormView
 
+import requests
+
 from .models import *
 from .forms import BasicForm
 
@@ -28,6 +30,27 @@ def form(request):
 	if request.method == 'POST':
 		for p, k in request.POST.items():
 			print(p, k)
+
+		url = 'https://jsonplaceholder.typicode.com/users'
+		r = requests.get(url)
+		data = r.json()
+		post = request.POST
+
+		cl = Codeline.objects.create(
+				codeline_name=post.get('c_name'),
+				parent_codeline=post.get('p_name'),
+				bug_id=post.get('bug'),
+				tag=post.get('tag'),
+				build_setup="test",
+				username="test"
+			)
+
+		for d in data:
+			if request.POST.get(d['name']):
+				bl = BuildList.objects.create(
+						codeline=cl,
+						build_name=d['name']
+					)
 		return render(request, "initial/form.html")
 
 	if request.method == "GET":

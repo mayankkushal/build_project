@@ -13,9 +13,9 @@ class Codeline(models.Model):
 	parent_codeline = models.CharField('Parent', max_length=50)
 	tag = models.CharField('Tag', max_length=50)
 	bug_id = models.CharField("Bug Id", max_length=50)
-	do_push = models.BooleanField()
+	do_push = models.BooleanField(default=False)
 	build_setup = models.CharField("Wrapper Build Setup", max_length=50)
-	sanity_setup = models.BooleanField()
+	sanity_setup = models.BooleanField(default=False)
 	username = models.CharField("Username", max_length=50)
 
 	def __str__(self):
@@ -24,8 +24,8 @@ class Codeline(models.Model):
 class BuildList(models.Model):
 	codeline = models.ForeignKey('codeline', on_delete=models.CASCADE)
 	build_name = models.CharField("Build Name", max_length=50)
-	isinternal = models.BooleanField()
-	standard_push = models.BooleanField()
+	isinternal = models.BooleanField(default=False)
+	standard_push = models.BooleanField(default=False)
 
 	def __str__(self):
 		return self.build_name
