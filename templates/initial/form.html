@@ -7,7 +7,7 @@
 		<div class="tbox">
 			<h4 class="title">Request New Codeline</h4>
 		</div>
-		<form class="form-horizontal" action="." method="post">
+		<form class="form-horizontal" action="." method="post" id="codeline_form">
 			{% csrf_token %}
 			<div class="box">
 				<legend><h4 class="bold">Codeline Information</h4></legend>
@@ -21,7 +21,7 @@
 				<div class="form-group">
 					<label class="control-label col-sm-2">Parent Codeline:</label>
 					<div class="col-sm-10">
-						<input type="text" class="form-control" id="PName" placeholder="Parent Codeline" name="p_name">
+						<input type="text" class="form-control" id="PName" placeholder="Parent Codeline" name="p_name" required>
 					</div>
 				</div>
 				<div class="form-group">

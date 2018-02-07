@@ -5,13 +5,13 @@ $(document).ready(function() {
             	var i = 0
             	while(i < 3 ){
             		$(".ssp-dy").append(
-            			'<div class="checkbox"><label class="ssp_inputs"><input type="checkbox" name="'+data[i].name+'">'+data[i].name+'</label></div>'
+            			'<div class="checkbox"><label class="ssp_inputs"><input type="checkbox" name="stand_push" value="'+data[i].name+'">'+data[i].name+'</label></div>'
             			)
             		i ++;
             	}
             });
             $('#h-ssp').removeClass('hidden');
-        } else {
+        } else {                                     // name="int_<value>"
             $('#h-ssp').addClass('hidden');
             $(".ssp-dy").empty()
         }
@@ -23,7 +23,7 @@ $(document).ready(function() {
  				var i = 3
             	while(i < 6){
             		$(".sib-dy").append(
-            			'<div class="checkbox"><label class="sib_inputs"><input type="checkbox" name="'+data[i].name+'">'+data[i].name+'</label></div>'
+            			'<div class="checkbox"><label class="sib_inputs"><input type="checkbox" name="internal" value="'+data[i].name+'">'+data[i].name+'</label></div>'
             			)
             		i ++;
             	}
@@ -40,7 +40,7 @@ $(document).ready(function() {
             	var i = 6
             	while(i < 10 ){
             		$(".seb-dy").append(
-            			'<div class="checkbox"><label class="seb_inputs"><input type="checkbox" name="'+data[i].name+'">'+data[i].name+'</label></div>'
+            			'<div class="checkbox"><label class="seb_inputs"><input type="checkbox" name="external" value="'+data[i].name+'">'+data[i].name+'</label></div>'
             			)
             		i ++;
             	}
@@ -110,6 +110,14 @@ $(document).ready(function() {
                 }
             });
             this.checked = false;
+        }
+    });
+
+    // Validations
+    $('#codeline_form').submit(function() {
+        c_pat = new RegExp("^[a-z][a-z0-9]")
+        if(!c_pat.test($('#CName').val())) {
+            alert("Codeline Name: Please match the formatting.\n- Uppercase, special charaters not allowed.\n- First character cannot be a digit");
         }
     });
 });

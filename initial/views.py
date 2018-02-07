@@ -31,10 +31,11 @@ def form(request):
 		for p, k in request.POST.items():
 			print(p, k)
 
-		url = 'https://jsonplaceholder.typicode.com/users'
-		r = requests.get(url)
-		data = r.json()
 		post = request.POST
+
+		internal = post.getlist('internal')
+		stand_push = post.getlist('stand_push')
+		external = post.getlist('external')
 
 		cl = Codeline.objects.create(
 				codeline_name=post.get('c_name'),
@@ -44,13 +45,28 @@ def form(request):
 				build_setup="test",
 				username="test"
 			)
-
-		for d in data:
-			if request.POST.get(d['name']):
-				bl = BuildList.objects.create(
+		if internal:
+			for i in internal:
+				BuildList.objects.create(
 						codeline=cl,
-						build_name=d['name']
+						build_name=i,
+						isinternal=True
 					)
+		if stand_push:
+			for i in stand_push:
+				BuildList.objects.create(
+						codeline=cl,
+						build_name=i,
+						standard_push=True
+					)
+		if external:
+			for i in external:
+				BuildList.objects.create(
+						codeline=cl,
+						build_name=i,
+					)
+
+		
 		return render(request, "initial/form.html")
 
 	if request.method == "GET":

@@ -9,17 +9,17 @@ class Codeline(models.Model):
 	"""
 	Basic model to be used in the form
 	"""
-	codeline_name = models.CharField('Name', max_length=50)
-	parent_codeline = models.CharField('Parent', max_length=50)
-	tag = models.CharField('Tag', max_length=50)
-	bug_id = models.CharField("Bug Id", max_length=50)
+	codeline_name = models.CharField('Name', max_length=130)
+	parent_codeline = models.CharField('Parent', max_length=130)
+	tag = models.CharField('Tag', max_length=130, null=True, blank=True)
+	bug_id = models.CharField("Bug Id", max_length=50, null=True, blank=True)
 	do_push = models.BooleanField(default=False)
 	build_setup = models.CharField("Wrapper Build Setup", max_length=50)
 	sanity_setup = models.BooleanField(default=False)
 	username = models.CharField("Username", max_length=50)
 
 	def __str__(self):
-		return self.username
+		return self.codeline_name
 
 class BuildList(models.Model):
 	codeline = models.ForeignKey('codeline', on_delete=models.CASCADE)
