@@ -123,3 +123,110 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles/')
 STATICFILES_DIRS = [STATIC_DIR, ]
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse'
+        }
+    },
+    'handlers': {
+        'mail_admins': {
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
+            'class': 'django.utils.log.AdminEmailHandler'
+        },
+        'stream_to_console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler'
+        },
+    },
+    'loggers': {
+        'django.request': {
+            'handlers': ['mail_admins'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+        'django_auth_ldap': {
+            'handlers': ['stream_to_console'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    }
+}
+
+import ldap
+from django_auth_ldap.config import LDAPSearch, GroupOfNamesType
+
+
+# # Baseline configuration.
+AUTH_LDAP_SERVER_URI = "ldap://ldap.nvidia.com"
+
+# AUTH_LDAP_BIND_DN = "cn=svcmobile_promotions,dc=nvidia,dc=com"
+# AUTH_LDAP_BIND_PASSWORD = ""
+# #AUTH_LDAP_USER_DN_TEMPLATE = "%(user)s@nvidia.com"
+
+AUTH_LDAP_BIND_AS_AUTHENTICATING_USER = True
+AUTH_LDAP_USER_DN_TEMPLATE = "%(user)s@nvidia.com"
+AUTH_LDAP_USER_SEARCH = LDAPSearch("OU=Users,DC=nvidia,DC=com",
+    ldap.SCOPE_SUBTREE, "(objectClass=groupOfNames)")
+# # or perhaps:
+# # AUTH_LDAP_USER_DN_TEMPLATE = "uid=%(user)s,ou=users,dc=nvidia,dc=com"
+
+
+# #options
+AUTH_LDAP_CONNECTION_OPTIONS = { 
+    ldap.OPT_REFERRALS: 0
+}
+
+# AUTH_LDAP_USER_SEARCH = LDAPSearch("DC=nvidia,DC=com",
+#     ldap.SCOPE_SUBTREE, "(cn=*)")
+
+# Set up the basic group parameters.
+# AUTH_LDAP_GROUP_SEARCH = LDAPSearch("ou=groups,dc=nvidia,dc=com",
+#     ldap.SCOPE_SUBTREE, "(objectClass=groupOfNames)"
+# )
+#AUTH_LDAP_GROUP_TYPE = GroupOfNamesType()
+
+# # Simple group restrictions
+# AUTH_LDAP_REQUIRE_GROUP = "cn=access-sw-mobile-gerrit-promotions-submitters,ou=GroupID,ou=groups,dc=nvidia,dc=com"
+# AUTH_LDAP_DENY_GROUP = "cn=access-sw-mobile-gerrit-promotions-submitters,ou=GroupID,ou=groups,dc=nvidia,dc=com"
+
+# Populate the Django user from the LDAP directory.
+AUTH_LDAP_USER_ATTR_MAP = {
+    "first_name": "member",
+    "last_name": "sn",
+    "email": "mail"
+}
+
+# AUTH_LDAP_PROFILE_ATTR_MAP = {
+#     "employee_number": "employeeNumber"
+# }
+
+# AUTH_LDAP_USER_FLAGS_BY_GROUP = {
+#     "is_active": "cn=access-sw-mobile-gerrit-promotions-submitters,ou=GroupID,ou=groups,dc=nvidia,dc=com",#"cn=active,ou=django,ou=groups,dc=nvidia,dc=com",
+#     "is_staff": "cn=access-sw-mobile-gerrit-promotions-submitters,ou=GroupID,ou=groups,dc=nvidia,dc=com",#"cn=staff,ou=django,ou=groups,dc=nvidia,dc=com",
+#     "is_superuser": "cn=superuser,ou=access-sw-mobile-gerrit-promotions-submitters,ou=groups,dc=nvidia,dc=com"
+# }
+
+# # AUTH_LDAP_PROFILE_FLAGS_BY_GROUP = {
+# #     "is_awesome": "cn=access-sw-mobile-gerrit-promotions-submitters,ou=GroupID,ou=groups,dc=nvidia,dc=com",#"cn=awesome,ou=django,ou=groups,dc=nvidia,dc=com",
+# # }
+
+# # # Use LDAP group membership to calculate group permissions.
+# # AUTH_LDAP_FIND_GROUP_PERMS = True
+
+# # # Cache group memberships for an hour to minimize LDAP traffic
+# # AUTH_LDAP_CACHE_GROUPS = True
+# # AUTH_LDAP_GROUP_CACHE_TIMEOUT = 3600
+
+
+# # Keep ModelBackend around for per-user permissions and maybe a local
+# # superuser.
+AUTHENTICATION_BACKENDS = (
+    'django_auth_ldap.backend.LDAPBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)

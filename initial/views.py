@@ -3,11 +3,13 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render
 from django.views.generic import FormView
+from django.contrib.auth import authenticate, login
+from django.http import HttpResponseRedirect, HttpResponse
 
 import requests
 
 from .models import *
-from .forms import BasicForm
+from .forms import BasicForm, LoginForm
 
 # Create your views here.
 
@@ -71,3 +73,26 @@ def form(request):
 
 	if request.method == "GET":
 		return render(request, "initial/form.html")
+
+
+def ldap_login(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = request.POST['username']
+            password = request.POST['password']
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    # Redirect to a success page.
+                    return HttpResponseRedirect("/")
+                else:
+                    return HttpResponse("Disabled account")
+                    # Return a 'disabled account' error message
+            else:
+                # Return an 'invalid login' error message.
+                return HttpResponse("Invalid login")
+    else:
+        form = LoginForm()
+    return render(request,"initial/login.html",{'form':form})
